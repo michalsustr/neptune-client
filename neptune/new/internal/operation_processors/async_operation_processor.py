@@ -188,8 +188,12 @@ class AsyncOperationProcessor(OperationProcessor):
         )
         def process_batch(self, batch: List[Operation], version: int) -> None:
             # TODO: Handle Metadata errors
+            print("******BATCH******")
+            print(f"Batch: {batch}")
             result = self._processor._backend.execute_operations(self._processor._run_uuid, batch)
+            print(f"Result: {result}")
             self._processor._queue.ack(version)
+            print(f"Ack: {version}")
             for error in result:
                 _logger.error("Error occurred during asynchronous operation processing: %s", error)
 
